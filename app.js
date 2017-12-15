@@ -8,18 +8,19 @@ const session = require('express-session');
 const path = require('path');
 const app = express();
 const passport = require('passport');
+const DBConfig = require('./config/database');
 
-
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 // map global promise 
 mongoose.Promise = global.Promise;
 
 //connect to mongoose
-mongoose.connect("mongodb://localhost/vidjot-dev", {
+mongoose.connect(DBConfig.mongoURI, {
     useMongoClient: true,
 }).then(() => {
     console.log('MongoDB connected');
 }).catch((e) => { console.log(e); });
+
 
 //load routes 
 const ideas = require('./routes/idea');
